@@ -133,13 +133,16 @@ def store_page_result(url, soup):
 	if object_uri_re.match(url):
 		object_id = object_uri_re.search(url).group(1)
 		p = parsedatetime.Calendar()
-		string_view_time = soup.find('dt',
-			string='Total time displayed:').next_sibling.next_sibling.string 
-		view_time_millis = (
-			datetime.fromtimestamp(
-				mktime(p.parse(string_view_time)[0]))
-			- datetime.now()).total_seconds() * 1000
-		view_time_millis = 1
+		try:
+			string_view_time = soup.find('dt',
+				string='Total time displayed:').next_sibling.next_sibling.string 
+			view_time_millis = (
+				datetime.fromtimestamp(
+					mktime(p.parse(string_view_time)[0]))
+				- datetime.now()).total_seconds() * 1000
+		except:
+			view_time_millis = 0
+			#import pdb; pdb.set_trace()
 		piece_name = soup.find(property='og:title')['content']
 		attributed_artist = soup.find(
 			property='og:description')['content'].replace('By ', '')
