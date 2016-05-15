@@ -9,6 +9,8 @@ import re
 import requests as r
 import sqlite3
 
+# test commit from phone
+
 c = sqlite3.connect('eo.db')
 cur = c.cursor()
 
